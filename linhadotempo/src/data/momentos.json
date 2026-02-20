@@ -3,54 +3,54 @@
     "data": "31/05/2024",
     "titulo": "Primeira Conversa",
     "desc": "Onde tudo começou... o primeiro 'oi' que mudou nossas vidas.",
-    "foto": "/Linha-Do-Tempo_react/foto14.png"
+    "foto": "foto14.png"
   },
   {
     "data": "12/06/2024",
     "titulo": "Início do Namoro",
     "desc": "O dia em que o 'eu e você' virou 'nós'. Nosso primeiro Dia dos Namorados.",
-    "foto": "/Linha-Do-Tempo_react/foto2.png"
+    "foto": "foto2.png"
   },
   {
     "data": "25/06/2024",
     "titulo": "Primeiro Abraço",
     "desc": "A sensação de finalmente estar em casa nos seus braços.",
-    "foto": "/Linha-Do-Tempo_react/foto3.png"
+    "foto": "foto3.png"
   },
   {
     "data": "05/01/2025",
     "titulo": "Primeiro Beijo",
     "desc": "O momento em que o mundo parou por alguns segundos.",
-    "foto": "/Linha-Do-Tempo_react/foto10.png"
+    "foto": "foto10.png"
   },
   {
     "data": "12/06/2025",
     "titulo": "Nosso Primeiro Buquê",
     "desc": "Um ano de muito amor e as primeiras de muitas flores.",
-    "foto": "/Linha-Do-Tempo_react/fotobuque.png"
+    "foto": "fotobuque.png"
   },
   {
     "data": "10/08/2025",
     "titulo": "Nossa Primeira Aliança",
     "desc": "O símbolo do nosso compromisso e da nossa união.",
-    "foto": "/Linha-Do-Tempo_react/foto7.png"
+    "foto": "foto7.png"
   },
   {
     "data": "25/12/2025",
     "titulo": "Primeiro Natal",
     "desc": "A magia das festas ficou completa com você.",
-    "foto": "/Linha-Do-Tempo_react/foto6.png"
+    "foto": "foto6.png"
   },
   {
     "data": "07/02/2026",
     "titulo": "Nossa primeira viagem juntos",
     "desc": "A primeira vez que a gente se viu o dia todo.",
-    "foto": "/Linha-Do-Tempo_react/foto11.png"
+    "foto": "foto11.png"
   },
   {
     "data": "07/02/2026",
     "titulo": "Primeira Noite Dormindo Juntos",
     "desc": "O melhor despertar de todos, sabendo que tenho você.",
-    "foto": "/Linha-Do-Tempo_react/foto9.png"
+    "foto": "foto9.png"
   }
 ]
