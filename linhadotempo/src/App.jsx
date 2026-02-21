@@ -7,62 +7,60 @@ import './App.css'
 const Home = () => {
   const [tocando, setTocando] = useState(false)
   const audioRef = useRef(null)
-  const scrollIntervalRef = useRef(null)
+  const requestRef = useRef(null) // Usado para a animação suave no iPhone
 
-  // ✅ SEM BARRA NA FRENTE
   const fotosCoracao = [
-    "foto13.png",
-    "foto2.png",
-    "foto3.png",
-    "foto4.png",
-    "foto5.png",
-    "foto15.png",
-    "foto14.png",
-    "fotobuque.png",
-    "foto6.png",
-    "foto7.png",
-    "foto8.png",
-    "foto9.png",
-    "foto10.png"
+    "foto13.png", "foto2.png", "foto3.png", "foto4.png", "foto5.png",
+    "foto15.png", "foto14.png", "fotobuque.png", "foto6.png", "foto7.png",
+    "foto8.png", "foto9.png", "foto10.png"
   ]
 
-  const iniciarExperiencia = () => {
-    if (!tocando) {
-      audioRef.current.play()
-      setTocando(true)
+  // Função de rolagem otimizada para iOS
+  const scrollStep = () => {
+    window.scrollBy(0, 0.8) // Velocidade suave
+    const fimDaPagina = window.innerHeight + window.scrollY >= document.body.offsetHeight - 2
 
-      scrollIntervalRef.current = setInterval(() => {
-        window.scrollBy(0, 1)
-
-        const fimDaPagina =
-          window.innerHeight + window.scrollY >= document.body.offsetHeight
-
-        if (fimDaPagina) {
-          clearInterval(scrollIntervalRef.current)
-          setTocando(false)
-        }
-      }, 50)
-    } else {
-      audioRef.current.pause()
+    if (fimDaPagina) {
+      cancelAnimationFrame(requestRef.current)
       setTocando(false)
-      clearInterval(scrollIntervalRef.current)
+    } else {
+      requestRef.current = requestAnimationFrame(scrollStep)
     }
   }
 
+  const iniciarExperiencia = () => {
+    if (!tocando) {
+      // No iPhone, o play() deve ser imediato ao clique
+      audioRef.current.play()
+        .then(() => {
+          setTocando(true)
+          requestRef.current = requestAnimationFrame(scrollStep)
+        })
+        .catch(err => {
+          console.error("Erro ao tocar áudio no iOS:", err)
+          // Fallback caso o navegador bloqueie
+          setTocando(true)
+          requestRef.current = requestAnimationFrame(scrollStep)
+        })
+    } else {
+      audioRef.current.pause()
+      setTocando(false)
+      cancelAnimationFrame(requestRef.current)
+    }
+  }
+
+  // Limpeza ao sair da página
   useEffect(() => {
-    return () => clearInterval(scrollIntervalRef.current)
+    return () => cancelAnimationFrame(requestRef.current)
   }, [])
 
   return (
     <div className="home-timeline-page">
-      {/* ✅ MUSICA CORRIGIDA */}
       <audio
         ref={audioRef}
         src={`${import.meta.env.BASE_URL}music.mp3`}
-        onEnded={() => {
-          setTocando(false)
-          clearInterval(scrollIntervalRef.current)
-        }}
+        preload="auto"
+        loop
       />
 
       <header className="timeline-header">
@@ -70,10 +68,7 @@ const Home = () => {
         <p>Cada detalhe guardado com amor</p>
 
         <div className="botoes-topo">
-          <Link to="/calendar" className="btn-ir-calendario">
-            📅 Calendário
-          </Link>
-
+          <Link to="/calendar" className="btn-ir-calendario">📅 Calendário</Link>
           <button onClick={iniciarExperiencia} className="btn-musica">
             {tocando ? "⏸️ Pausar" : "🎵 Iniciar Experiência"}
           </button>
@@ -82,12 +77,7 @@ const Home = () => {
 
       <div className="timeline-main">
         {momentos.map((item, index) => (
-          <div
-            key={index}
-            className={`timeline-node ${
-              index % 2 === 0 ? "left" : "right"
-            }`}
-          >
+          <div key={index} className={`timeline-node ${index % 2 === 0 ? "left" : "right"}`}>
             <div className="node-content">
               <span className="node-date">{item.data}</span>
               <h3>{item.titulo}</h3>
@@ -98,8 +88,6 @@ const Home = () => {
               <div className="string-line"></div>
               <div className="polaroid-wrapper">
                 <div className="washi-tape"></div>
-
-                {/* ✅ FOTO TIMELINE CORRIGIDA */}
                 <img
                   src={`${import.meta.env.BASE_URL}${item.foto}`}
                   alt={item.titulo}
@@ -113,7 +101,6 @@ const Home = () => {
 
       <section className="heart-section">
         <h2>Para Sempre Nós... ❤️</h2>
-
         <div className="heart-container">
           {fotosCoracao.map((src, i) => (
             <img
@@ -124,16 +111,7 @@ const Home = () => {
             />
           ))}
         </div>
-
-        <p
-          style={{
-            marginTop: "40px",
-            color: "#ffb4c2",
-            fontWeight: "600"
-          }}
-        >
-          Amo você!
-        </p>
+        <p style={{ marginTop: "40px", color: "#ffb4c2", fontWeight: "600" }}>Amo você!</p>
       </section>
     </div>
   )
